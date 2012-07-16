@@ -3,13 +3,15 @@ print_r function in javascript (like print_r in PHP)
 jquery plugins
 
 Example :
-<script>
+<pre>
+&lt;script&gt;
 $(document).ready(function(){
 	var ar = [0,1,2,3,4,5,[123,13,[3,3,3],{"a":1,"c":[1,2,3]}]];
 	$(".console-area").print_r(ar);
 });
 
-</script>
+&lt;/script&gt;
+</pre>
 <div class="console-area"></div>
 
 Output :
