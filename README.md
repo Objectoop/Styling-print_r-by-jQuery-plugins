@@ -11,9 +11,9 @@ $(document).ready(function(){
 });
 
 &lt;/script&gt;
-</pre>
-<div class="console-area"></div>
 
+&lt;div class="console-area"&gt;&lt;/div&gt;
+</pre>
 Output :
 <pre>
 Array 
