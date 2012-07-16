@@ -1,0 +1,140 @@
+
+/*
+print_r javascript jquery plugins
+author : Krit Ratchawong
+email:kritwebmanager@gmail.com
+*/
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>
+
+(function($){
+
+	function dumpArray(console,array)
+	{
+		
+
+		var str ="Array <br/>"+getTabs(console.getCount())+"(<br/>";
+		for(var i =0; i < array.length;i++)
+		{
+			console.changeCount(1);
+			var temp = array[i];
+			if($.isArray(temp))
+			{
+				str += getTabs(console.getCount());
+				console.changeCount(2);
+				str +="["+i+"] => "+dumpArray(console,temp);
+				console.changeCount(-2);
+			}
+			else if(Object.prototype.toString.call(temp) == "[object Object]")
+			{
+				str += getTabs(console.getCount());
+				console.changeCount(2);
+				str +="["+i+"] => "+dumpObject(console,temp);
+				console.changeCount(-2);
+			}
+			else
+			{
+				
+				str += getTabs(console.getCount())+"["+i+"] => "+temp+"<br/>";
+				
+			}
+			console.changeCount(-1);
+		}
+		str += getTabs(console.getCount())+")<br/>";
+		return str;
+	}
+
+	function dumpObject(console,obj)
+	{
+		var str ="Object <br/>"+getTabs(console.getCount())+"(<br/>";
+		for(var k in obj)
+		{
+			console.changeCount(1);
+			var temp = obj[k];
+			if($.isArray(temp))
+			{
+				str += getTabs(console.getCount());
+				console.changeCount(2);
+				str +="["+k+"] => "+dumpArray(console,temp);
+				console.changeCount(-2);
+			}
+			else if(Object.prototype.toString.call(temp) == "[object Object]")
+			{
+				str += getTabs(console.getCount());
+				console.changeCount(2);
+				str +="["+k+"] => "+dumpObject(console,temp);
+				console.changeCount(-2);
+			}
+			else
+			{
+				
+				str += getTabs(console.getCount())+"["+k+"] => "+temp+"<br/>";
+				
+			}
+			console.changeCount(-1);
+		}
+		str += getTabs(console.getCount())+")<br/>";
+		return str;
+	}
+
+	function getTabs(cnt)
+	{
+		var str = '';
+		for(var i  = 0; i < cnt ;i++)
+		{
+			str += "&nbsp;&nbsp;&nbsp;&nbsp;";
+		}
+		return str;
+	}
+
+	$.fn.changeCount = function(i){
+		return this.each(function(){
+			var cnt = parseInt($(this).attr("cnt"));
+		    $(this).attr('cnt',cnt+i);
+		});
+		
+	};
+	$.fn.getCount = function(){
+		return parseInt(this.attr('cnt'));
+	};
+
+	$.fn.print_r = function(arrayOrJson)
+	{    
+		this.attr('cnt',0);
+		return this.each(function()
+		{
+			$(this).css({
+				width:"500px",
+				border:"1px solid #cccccc"
+			});
+			var str = "";
+			if($.isArray(arrayOrJson))
+			{
+				str = dumpArray($(this),arrayOrJson);
+			}
+			else if(Object.prototype.toString.call(arrayOrJson) == "[object Object]")
+			{
+				str = dumpObject($(this),arrayOrJson);
+			}
+			else
+			{
+				str = "This is not Array or Object : p";
+			}
+			$(this).html(str);
+		});
+		
+	};
+
+	
+	
+
+})(jQuery);
+
+
+$(document).ready(function(){
+	var ar = [0,1,2,3,4,5,[123,13,[3,3,3],{"a":1,"c":[1,2,3]}]];
+	$(".console-area").print_r(ar);
+});
+
+</script>
+<div class="console-area"></div>
