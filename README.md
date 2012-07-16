@@ -13,6 +13,7 @@ $(document).ready(function(){
 <div class="console-area"></div>
 
 Output :
+<pre>
 Array 
 (
     [0] => 0
@@ -43,3 +44,4 @@ Array
                         )
             )
 )
+</pre>
